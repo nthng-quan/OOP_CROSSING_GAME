@@ -43,7 +43,7 @@ void Boat::DRAW() {
 	for (int i = 0; i < height; i++) {
 		GotoXY({ position.X, position.Y++});
 		for (int j = 0; j < width; j++) {
-			if (position.X + j >= 30 && position.X + j <= 109) {
+			if (position.X + j >= 35 && position.X + j <= 109) {
 				cout << graphic[red][i][j];
 			}
 		}
@@ -54,7 +54,7 @@ void Boat::DRAW() {
 }
 
 void Boat::Moving() {
-	if (pos.X + width >= 131 || pos.X + width <= 40) {
+	if (pos.X + width >= 220 || pos.X + width <= 40) {
 		del(pos, { pos.X + width,pos.Y + height });
 		state = false;
 		pos = inpos;
@@ -76,7 +76,7 @@ void Boat::Moving() {
 
 	if (state and !direction)
 	{
-		if (pos.X <= 110 - 21 - 1)
+		if (pos.X <= 84)
 		del(pos, { pos.X + width,pos.Y + height });
 		pos.X--;
 	}

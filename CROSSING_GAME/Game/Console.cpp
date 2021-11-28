@@ -15,12 +15,14 @@ void Console::SetSize(short w, short h) {
 }
 
 void Console::SetCursor() {
-	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE); 
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO     cursorInfo;
 
 	GetConsoleCursorInfo(out, &cursorInfo);
 	cursorInfo.bVisible = false;
 	SetConsoleCursorInfo(out, &cursorInfo);
+
+
 }
 
 void Console::setbuffer() {
@@ -32,8 +34,8 @@ void Console::setbuffer() {
 	short winWidth = scrBufferInfo.srWindow.Right - scrBufferInfo.srWindow.Left + 1;
 	short winHeight = scrBufferInfo.srWindow.Bottom - scrBufferInfo.srWindow.Top + 1;
 
-	short scrBufferWidth = scrBufferInfo.dwSize.X + 27;
-	short scrBufferHeight = scrBufferInfo.dwSize.Y + 27;
+	short scrBufferWidth = scrBufferInfo.dwSize.X;
+	short scrBufferHeight = scrBufferInfo.dwSize.Y;
 
 	COORD newSize;
 	newSize.X = scrBufferWidth;
@@ -46,17 +48,17 @@ void Console::setbuffer() {
 		exit(Status);
 	}
 
-	GetConsoleScreenBufferInfo(hOut, &scrBufferInfo);
-	cout << "Screen Buffer Size : " << scrBufferInfo.dwSize.X << " x " << scrBufferInfo.dwSize.Y << endl;
+	//	GetConsoleScreenBufferInfo(hOut, &scrBufferInfo);
+	//	cout << "Screen Buffer Size : " << scrBufferInfo.dwSize.X << " x " << scrBufferInfo.dwSize.Y << endl;
 }
 
 void Console::setfontsize(int a, int b) {
-		PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX();
-		lpConsoleCurrentFontEx->cbSize = sizeof(CONSOLE_FONT_INFOEX);
-		GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
-		lpConsoleCurrentFontEx->dwFontSize.X = a;
-		lpConsoleCurrentFontEx->dwFontSize.Y = b;
-		SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
+	PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX();
+	lpConsoleCurrentFontEx->cbSize = sizeof(CONSOLE_FONT_INFOEX);
+	GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
+	lpConsoleCurrentFontEx->dwFontSize.X = a;
+	lpConsoleCurrentFontEx->dwFontSize.Y = b;
+	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
 }
 
 short Console::GetColor(short bcolor, short tcolor) {
@@ -98,15 +100,15 @@ void Console::SetConsole(const int& fontsize, const int& width, const int& heigh
 }
 
 void GotoXY(COORD pos) {
+
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
 void del(COORD posA, COORD posB) {
 	GotoXY(posA);
 	COORD tmp = posA;
-	
 	for (int i = 0; i < abs(posB.Y - tmp.Y); i++) {
-		GotoXY({ posA.X, posA.Y++ });
+		GotoXY({ posA.X,posA.Y++ });
 		for (int j = 0; j < abs(posB.X - tmp.X); j++)
 			cout << " ";
 	}
@@ -123,4 +125,19 @@ void DrawString(const string& str, const COORD& COOR, const int& Color) {
 	GotoXY(COOR);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(Color));
 	cout << str;
+}
+
+void DrawfromFile(const COORD& pos, const char* filename) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	fstream filein;
+	filein.open(filename);
+	string tmp;
+	short i = 0;
+	while (getline(filein, tmp)) {
+		SetConsoleTextAttribute(handle, WORD(rand() % 15 + 1));
+		GotoXY({ pos.X,pos.Y + i++ });
+		cout << tmp << "\n";
+	}
+
+	filein.close();
 }

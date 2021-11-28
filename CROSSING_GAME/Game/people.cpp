@@ -10,7 +10,6 @@ People::People(const COORD& pos_, const short& height_, const short& width_, con
 	infile.open(filename);
 	string tmp;
 	int i = 0;
-
 	while (getline(infile, tmp)) {
 		for (int j = 0; j < tmp.length(); j++) {
 			graphic[i][j] = tmp[j];
@@ -19,22 +18,23 @@ People::People(const COORD& pos_, const short& height_, const short& width_, con
 	}
 
 	infile.close();
+
 }
 
 void People::DRAW() {
 	COORD position = pos;
 	for (int i = 0; i < height; i++) {
 		GotoXY({ position.X, position.Y++ });
-		for (int j = 0; j < width; j++) {
+		for (int j = 0; j < width; j++)
 			cout << graphic[i][j];
-		}
 	}
 }
 
 void People::Moving(Map& map) {
-	del(pos, { pos.X + width, pos.Y + height });
+	del(pos, { pos.X + width,pos.Y + height });
 	if (_kbhit()) {
 		char key = toupper(_getch());
+		PlaySound(L"./sound/popsound.wav", NULL, SND_FILENAME | SND_ASYNC);
 		switch (key)
 		{
 		case 'A':
@@ -58,12 +58,14 @@ void People::Moving(Map& map) {
 			map.UpdateMap_people({ pos.X - 1,pos.Y }, pos);
 			break;
 		}
+
 	}
 	DRAW();
+
 }
 
 bool People::IsDead() {
-	string hit = "()</-|o.*`";
+	string hit = "*'()</|o";
 	for (int i = 0; i < hit.length(); i++) {
 		if (
 			GetCOORD({ pos.X, pos.Y }) == hit[i] ||

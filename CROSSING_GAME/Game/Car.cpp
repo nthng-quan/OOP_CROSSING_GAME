@@ -3,10 +3,11 @@
 void Car::DRAW() {
 	COORD position = pos;
 	for (int i = 0; i < height; i++) {
-		GotoXY({ position.X, position.Y++ });
+		GotoXY({ position.X,position.Y++ });
 		for (int j = 0; j < width; j++) {
-			if (position.X + j >= 15 && position.X + j <= 108) // 108 -> edge 15 : width
+			if (position.X + j >= 20 && position.X + j <= 103) {
 				cout << graphic[i][j];
+			}
 		}
 	}
 }
@@ -20,31 +21,28 @@ int Car::getWidth() {
 }
 
 void Car::Moving() {
+	if (pos.X + width >= 110 || pos.X + width <= 10) {
+		del(pos, { pos.X + width,pos.Y + height });
+		state = false;
+		pos = inpos;
+		return;
+	}
+
 	if (!state)
 	{
 		state = true;
 		return;
 	}
 
-	if (pos.X + width >= 110 + 15 + 1 || pos.X + width <= 15 + 1)
-	{
-		del(pos, { pos.X + width , pos.Y + height});
-		state = false;
-		pos = inpos;
-	
-		return;
-	}
-
 	if (state and direction)
-	{	
-		del(pos, { pos.X + 1, pos.Y + height });
+	{
+		del(pos, { pos.X + 1,pos.Y + height });
 		pos.X++;
 	}
 
 	if (state and !direction)
 	{
-		if(pos.X <= 110 - 15 - 1)
-			del(pos, { pos.X + width, pos.Y + height });
+		del(pos, { pos.X + width,pos.Y + height });
 		pos.X--;
 	}
 

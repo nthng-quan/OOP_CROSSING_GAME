@@ -55,7 +55,6 @@ void Game::iniCar() {
 		Carlist1.push_back(new Car({ 11, 10 }, 15, 3, "graphic/car.txt", 1, 0));
 		// LINE_NO_5 = 26
 		Carlist2.push_back(new Car({ 11, 26 }, 15, 3, "graphic/car.txt", 1, 0));
-		Sleep(speed);
 	}
 }
 
@@ -79,7 +78,6 @@ void Game::iniTruck() {
 	for (int i = 0; i < 3; i++) {
 		Trucklist1.push_back(new Truck({ 110 ,15 }, 21, 3, "graphic/truck.txt", 0, 0));
 		Trucklist2.push_back(new Truck({ 110 ,31 }, 21, 3, "graphic/truck.txt", 0, 0));
-		Sleep(speed);
 	}
 }
 
@@ -104,7 +102,6 @@ void Game::iniTL() {
 	ListLight.clear();
 
 	ListLight.push_back(new TrafficLight({ 15,12 }, 3, 3, "graphic/TrafficL.txt", 0));
-
 	ListLight.push_back(new TrafficLight({ 105,28 }, 3, 3, "graphic/TrafficL.txt", 0));
 }
 
@@ -161,14 +158,14 @@ void Game::RunGame() {
 		p_ingame();
 		TFcontrol(ListLight);
 		
-		if (!ListLight[0]->GetState() || ListLight[0]->GetState()) {
+		if (!ListLight[0]->GetState()) {
 			Moving(Carlist1, i1, dis1);
 			Moving(Trucklist1, i2, dis2);
 		}
 		
 		Moving(listBoat, i3, dis3);
 
-		if (!ListLight[1]->GetState() || ListLight[1]->GetState()) {
+		if (!ListLight[1]->GetState()) {
 			Moving(Carlist2, i4, dis4);
 			Moving(Trucklist2, i5, dis5);
 		}
@@ -176,10 +173,10 @@ void Game::RunGame() {
 		Moving(listShark, i7, dis7);
 
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(11));
-		GotoXY({ 116,9 });
+		GotoXY({ 116,21 });
 		cout << "> LEVEL: " << level << "/" << maxlevel;
-		GotoXY({ 116,10 });
-		cout << "> POINT: " << point;
+		GotoXY({ 116,22 });
+		cout << "> SCORE: " << point;
 		
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(15));
 

@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include<winapifamily.h>
 using namespace std;
+//#pragma execution_character_set("utf-8")
 
 class Console {
 public:
@@ -38,6 +39,6 @@ public:
 
 void GotoXY(COORD pos);
 void del(COORD posA, COORD posB);
-char GetCOORD(const COORD &COOR);
+char GetCOORD(const COORD& COOR);
 void DrawString(const string& str, const COORD& COOR, const int& Color);
-//bool GetColor(short& ret);
+void DrawfromFile(const COORD& pos, const char* filename);
