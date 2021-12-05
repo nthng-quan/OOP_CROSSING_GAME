@@ -15,7 +15,7 @@ void Console::SetSize(short w, short h) {
 }
 
 void Console::SetCursor() {
-	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE); 
 	CONSOLE_CURSOR_INFO     cursorInfo;
 
 	GetConsoleCursorInfo(out, &cursorInfo);
@@ -48,17 +48,17 @@ void Console::setbuffer() {
 		exit(Status);
 	}
 
-	//	GetConsoleScreenBufferInfo(hOut, &scrBufferInfo);
-	//	cout << "Screen Buffer Size : " << scrBufferInfo.dwSize.X << " x " << scrBufferInfo.dwSize.Y << endl;
+//	GetConsoleScreenBufferInfo(hOut, &scrBufferInfo);
+//	cout << "Screen Buffer Size : " << scrBufferInfo.dwSize.X << " x " << scrBufferInfo.dwSize.Y << endl;
 }
 
 void Console::setfontsize(int a, int b) {
-	PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX();
-	lpConsoleCurrentFontEx->cbSize = sizeof(CONSOLE_FONT_INFOEX);
-	GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
-	lpConsoleCurrentFontEx->dwFontSize.X = a;
-	lpConsoleCurrentFontEx->dwFontSize.Y = b;
-	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
+		PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx = new CONSOLE_FONT_INFOEX();
+		lpConsoleCurrentFontEx->cbSize = sizeof(CONSOLE_FONT_INFOEX);
+		GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
+		lpConsoleCurrentFontEx->dwFontSize.X = a;
+		lpConsoleCurrentFontEx->dwFontSize.Y = b;
+		SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), 0, lpConsoleCurrentFontEx);
 }
 
 short Console::GetColor(short bcolor, short tcolor) {
@@ -127,16 +127,16 @@ void DrawString(const string& str, const COORD& COOR, const int& Color) {
 	cout << str;
 }
 
-void DrawfromFile(const COORD& pos, const char* filename) {
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+void DrawfromFile(const COORD&pos,const char* filename) {
+	HANDLE handle= GetStdHandle(STD_OUTPUT_HANDLE);
 	fstream filein;
 	filein.open(filename);
 	string tmp;
 	short i = 0;
-	while (getline(filein, tmp)) {
+	while(getline(filein, tmp)) {
 		SetConsoleTextAttribute(handle, WORD(rand() % 15 + 1));
-		GotoXY({ pos.X,pos.Y + i++ });
-		cout << tmp << "\n";
+		GotoXY({ pos.X, pos.Y + i++ });
+		cout << tmp<<"\n";
 	}
 
 	filein.close();

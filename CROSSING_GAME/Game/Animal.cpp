@@ -31,7 +31,7 @@ Animal::Animal(COORD pos_, short width_, short height_, const char* filename, bo
 
 Animal::~Animal() {
 	width = height = 0;
-	pos = {0, 0};
+	pos = { 0, 0 };
 	direction = 0;
 	state = 0;
 }

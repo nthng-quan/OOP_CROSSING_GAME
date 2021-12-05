@@ -6,7 +6,6 @@ Boat::Boat(COORD pos_, short width_, short height_, const char* filename, bool d
 	height = height_;
 	direction = direction_;
 	state = state_;
-
 	time = 0;
 	fstream infile;
 	infile.open(filename);
@@ -15,7 +14,7 @@ Boat::Boat(COORD pos_, short width_, short height_, const char* filename, bool d
 			string tmp;
 		for (int j = 0; j < 4; j++) {
 			getline(infile, tmp);
-			for (int z = 0; z < 26; z++) {
+			for (int z = 0; z < 28; z++) {
 				graphic[i][j][z] = tmp[z];
 			}
 		}
@@ -37,24 +36,19 @@ int Boat::getWidth() {
 void Boat::DRAW() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(11));
 	int red = time % 3;
-
 	COORD position = pos;
-
 	for (int i = 0; i < height; i++) {
-		GotoXY({ position.X, position.Y++});
-		for (int j = 0; j < width; j++) {
-			if (position.X + j >= 35 && position.X + j <= 109) {
+		GotoXY({ position.X,position.Y++ });
+		for (int j = 0; j < width; j++)
+			if (position.X + j >= 35 && position.X + j <= 109)
 				cout << graphic[red][i][j];
-			}
-		}
 	}
-
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(15));
 	(time == 2) ? time = 0 : time++;
 }
 
 void Boat::Moving() {
-	if (pos.X + width >= 220 || pos.X + width <= 40) {
+	if (pos.X + width >= 150 || pos.X + width <= 40) {
 		del(pos, { pos.X + width,pos.Y + height });
 		state = false;
 		pos = inpos;
@@ -76,10 +70,21 @@ void Boat::Moving() {
 
 	if (state and !direction)
 	{
-		if (pos.X <= 84)
+		if (pos.X <= 82)
 		del(pos, { pos.X + width,pos.Y + height });
 		pos.X--;
 	}
 
 	DRAW();
+}
+
+COORD Boat::GetPos()const {
+
+	return pos;
+}
+
+bool Boat::GetState()const {
+
+	return state;
+
 }

@@ -14,4 +14,7 @@ public:
 	bool GetState();
 
 	void ControlTraffic();
+
 };
+
+

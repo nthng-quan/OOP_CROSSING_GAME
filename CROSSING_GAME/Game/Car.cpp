@@ -3,14 +3,13 @@
 void Car::DRAW() {
 	COORD position = pos;
 	for (int i = 0; i < height; i++) {
-		GotoXY({ position.X,position.Y++ });
-		for (int j = 0; j < width; j++) {
-			if (position.X + j >= 20 && position.X + j <= 103) {
+		GotoXY({ position.X,position.Y++});
+		for (int j = 0; j < width; j++)
+			if(position.X+j>=20 && position.X+j<=102)
 				cout << graphic[i][j];
-			}
-		}
 	}
 }
+
 bool Car::isMoving()
 {
 	return state;
@@ -47,22 +46,17 @@ void Car::Moving() {
 	}
 
 	DRAW();
+
+
 }
 
+COORD Car:: GetPos()const {
 
-//char*Car::backup() {
-//	COORD position = pos;
-//	char* a = new char[height];
-//	for (int i = 0; i < height; i++) 
-//		a[i] = GetCOORD({ position.X + width+1, position.Y++});
-//	return a;
-//	
-//}
-//
-//void Car::DRAWBU(const char *a) {
-//	COORD position = pos;
-//	for (int i = 0; i < height; i++) {
-//		GotoXY({ position.X - 1,position.Y++ });
-//		cout << a[i];
-//	}
-//}
+	return pos;
+}
+
+bool Car::GetState()const {
+
+	return state;
+
+}

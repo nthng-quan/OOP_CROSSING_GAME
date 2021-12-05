@@ -124,5 +124,14 @@
     <Text Include="graphic\Loading.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="graphic\Rules.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="graphic\About.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="graphic\BLNT.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

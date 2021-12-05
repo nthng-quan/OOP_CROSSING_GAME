@@ -2,11 +2,11 @@
 
 Key::Key() {
 	pos = { 0,0 };
-	str = " ";
-	Color = 0;
+	str=" ";
+	Color=0;
 }
 
-Key::Key(const COORD& pos_, const string& str_, const int& Color_) {
+Key::Key(const COORD& pos_, const string& str_, const int&Color_){
 	pos = pos_;
 	str = str_;
 	Color = Color_;

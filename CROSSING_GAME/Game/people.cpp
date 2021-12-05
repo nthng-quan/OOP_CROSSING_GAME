@@ -1,10 +1,10 @@
 #include "people.h"
 
-People::People(const COORD& pos_, const short& height_, const short& width_, const char* filename, bool IsDead_) {
+People::People(const COORD& pos_, const short& height_, const short& width_, const char*filename, bool IsDead_) {
 	pos = pos_;
 	height = height_;
 	width = width_;
-	state = IsDead_;
+	state= IsDead_;
 
 	fstream infile;
 	infile.open(filename);
@@ -23,49 +23,56 @@ People::People(const COORD& pos_, const short& height_, const short& width_, con
 
 void People::DRAW() {
 	COORD position = pos;
-	for (int i = 0; i < height; i++) {
+	for (int i=0; i < height; i++) {
 		GotoXY({ position.X, position.Y++ });
 		for (int j = 0; j < width; j++)
 			cout << graphic[i][j];
 	}
 }
 
-void People::Moving(Map& map) {
-	del(pos, { pos.X + width,pos.Y + height });
-	if (_kbhit()) {
-		char key = toupper(_getch());
-		PlaySound(L"./sound/popsound.wav", NULL, SND_FILENAME | SND_ASYNC);
-		switch (key)
-		{
-		case 'A':
-			if (pos.X >= 20)
+void People::Moving(Map&map) {
+	
+		if (GetAsyncKeyState(int(0x41)) & 1 && GetKeyState(int(0x41)) >> 15) {
+			del(pos, { pos.X + width,pos.Y + height });
+			if (pos.X >= 13)
 				pos.X--;
 			map.UpdateMap_people({ pos.X + width,pos.Y }, { pos.X + width - 1,pos.Y });
-			break;
-		case 'S':
-			if (pos.Y <= 57)
+			//PlaySound(L"./sound/popsound.wav", NULL, SND_FILENAME | SND_ASYNC);
+			mciSendString(L"play ./sound/popsound.wav ", NULL, 0, NULL);
+		}
+
+		if (GetAsyncKeyState(int(0x53)) & 1 && GetKeyState(int(0x53)) >> 15) {
+			del(pos, { pos.X + width,pos.Y + height });
+			if (pos.Y <= 42)
 				pos.Y++;
 			map.UpdateMap_people({ pos.X,pos.Y - 1 }, pos);
-			break;
-		case 'W':
+			//PlaySound(L"./sound/popsound.wav", NULL, SND_FILENAME | SND_ASYNC);
+			mciSendString(L"play ./sound/popsound.wav ", NULL, 0, NULL);
+		}
+
+		if (GetAsyncKeyState(int(0x57)) & 1 && GetKeyState(int(0x57)) >> 15) {
+			del(pos, { pos.X + width,pos.Y + height });
 			if (pos.Y >= 3)
 				pos.Y--;
 			map.UpdateMap_people({ pos.X,pos.Y + height }, { pos.X,pos.Y + height - 1 });
-			break;
-		case 'D':
-			if (pos.X <= 140)
-				pos.X++;
-			map.UpdateMap_people({ pos.X - 1,pos.Y }, pos);
-			break;
+			//PlaySound(L"./sound/popsound.wav", NULL, SND_FILENAME | SND_ASYNC);
+			mciSendString(L"play ./sound/popsound.wav ", NULL, 0, NULL);
 		}
 
-	}
-	DRAW();
+		if (GetAsyncKeyState(int(0x44)) & 1 && GetKeyState(int(0x44)) >> 15) {
+			del(pos, { pos.X + width,pos.Y + height });
+			if(pos.X<=104)
+				pos.X++;		
+			map.UpdateMap_people({ pos.X-1,pos.Y }, pos);
+			//PlaySound(L"./sound/popsound.wav", NULL, SND_FILENAME | SND_ASYNC);
+			mciSendString(L"play ./sound/popsound.wav ", NULL, 0, NULL);
+		}
 
+		DRAW();
 }
 
 bool People::IsDead() {
-	string hit = "*'()</|o";
+	string hit = "*'w()</|o[0]";
 	for (int i = 0; i < hit.length(); i++) {
 		if (
 			GetCOORD({ pos.X, pos.Y }) == hit[i] ||
@@ -81,13 +88,12 @@ bool People::IsDead() {
 			return state;
 		}
 	}
-
 	state = false;
 	return state;
 }
 
 bool People::IsOnTop() {
-	if (pos.Y <= 10)
+	if (pos.Y <= 6)
 		return true;
 	return false;
 }
@@ -98,4 +104,8 @@ void People::Get_Start() {
 	GotoXY(pos);
 
 	DRAW();
+}
+
+COORD People:: GetPos()const {
+	return pos;
 }

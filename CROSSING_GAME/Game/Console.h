@@ -39,6 +39,6 @@ public:
 
 void GotoXY(COORD pos);
 void del(COORD posA, COORD posB);
-char GetCOORD(const COORD& COOR);
+char GetCOORD(const COORD &COOR);
 void DrawString(const string& str, const COORD& COOR, const int& Color);
-void DrawfromFile(const COORD& pos, const char* filename);
+void DrawfromFile(const COORD&pos,const char* filename);

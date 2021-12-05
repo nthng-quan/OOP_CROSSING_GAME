@@ -1,6 +1,7 @@
 #include "Shark.h"
 
 void Shark::DRAW() {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(11));
 	COORD position = pos;
 	for (int i = 0; i < height; i++) {
 		GotoXY({ position.X, position.Y++ });
@@ -9,6 +10,7 @@ void Shark::DRAW() {
 				cout << graphic[i][j];
 		}
 	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(15));
 }
 
 bool Shark::isMoving() {
@@ -49,4 +51,15 @@ void Shark::Moving() {
 	}
 
 	DRAW();
+}
+
+COORD Shark::GetPos()const {
+
+	return pos;
+}
+
+bool Shark::GetState()const {
+
+	return state;
+
 }

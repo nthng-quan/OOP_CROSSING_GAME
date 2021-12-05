@@ -9,22 +9,19 @@ Vehicle::Vehicle() {
 }
 
 Vehicle::Vehicle(COORD pos_, short width_, short height_, const char* filename, bool direction_, bool state_) {
-	inpos = pos = pos_;
+	inpos=pos = pos_;
 	width = width_;
 	height = height_;
-
 	fstream filein;
 	filein.open(filename);
 	string tmp;
 	int i = 0;
-
 	while (getline(filein, tmp)) {
 		int j = 0;
 		for (int j = 0; j < tmp.size(); j++)
 			graphic[i][j] = tmp[j];
 		i++;
 	}
-	
 	filein.close();
 	direction = direction_;
 	state = state_;
@@ -32,9 +29,9 @@ Vehicle::Vehicle(COORD pos_, short width_, short height_, const char* filename, 
 
 Vehicle::~Vehicle() {
 	width = height = NULL;
-	pos = { NULL, NULL };
+	pos = { NULL,NULL };
 	direction = NULL;
-	state = NULL;
+	state=NULL;
 }
 
 //template <class T>

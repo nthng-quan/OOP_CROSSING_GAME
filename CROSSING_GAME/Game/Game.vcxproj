@@ -112,11 +112,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,10 +172,13 @@
     <ClInclude Include="Vehicle.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="graphic\About.txt" />
+    <Text Include="graphic\BLNT.txt" />
     <Text Include="graphic\car.txt" />
     <Text Include="graphic\crossingname.txt" />
     <Text Include="graphic\Loading.txt" />
     <Text Include="graphic\map1.txt" />
+    <Text Include="graphic\Rules.txt" />
     <Text Include="graphic\shark.txt" />
     <Text Include="graphic\truck.txt" />
   </ItemGroup>
