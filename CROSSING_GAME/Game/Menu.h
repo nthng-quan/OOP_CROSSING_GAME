@@ -38,12 +38,13 @@ private:
 	void hitOption();
 	void hitTutorial();
 	void hitQuit();
-	void hitLoad();
 
 	void Draw_Option();
 	void pMenu_Music(); 
+	void hitLoad(bool&);
 
 public:
+	bool load_status = 1;
 	Menu();
 	bool p_music;
 	bool IsQuit()const;

@@ -176,18 +176,21 @@ void Menu::hitTutorial() {
 	GotoXY({ 69,47 });
 	SetConsoleTextAttribute(handle, WORD(240));
 	cout << "Press ""Enter"" to back to Menu ";
+	
 	char c = ' ';
 	while (true) {
 		if (_kbhit()) {
 			c = _getch();
 		}
-		if (c == 13)break;
+		if (c == 13)
+			break;
 	}
+	
 	SetConsoleTextAttribute(handle, WORD(15));
 	system("cls");
 }
 
-void Menu::hitLoad() {
+void Menu::hitLoad(bool& status) {
 	system("cls");
 	SetConsoleOutputCP(CP_UTF8);
 	string user_load;
@@ -198,7 +201,28 @@ void Menu::hitLoad() {
 	
 	getline(cin, user_load);
 	load_profile = user_load;
+	
+	fstream filein;
+	filein.open("save/" + user_load + ".txt");
 
+	if (filein.fail()) {
+		status = 0;
+
+		cout << "- Cannot load your profile !\n";
+		cout << "- Press ""Enter"" to back to Menu";
+		char c = ' ';
+		while (true) {
+			if (_kbhit()) {
+				c = _getch();
+			}
+			if (c == 13)
+				break;
+		}
+	}
+	else {
+		status = 1;
+	}
+	filein.close();
 	system("cls");
 }
 
@@ -216,9 +240,12 @@ void Menu::Choose_Menu() {
 			PlaySound(NULL, 0, 0);
 			break;
 		case 2:
-			l_game = true;
-			hitLoad();
-			Loading();
+			hitLoad(load_status);
+			if (load_status) {
+				l_game = true;
+				Loading();
+			} else
+				Choose_Menu();
 			break;
 		case 3:
 			hitOption();

@@ -1,4 +1,5 @@
 #include "Game.h"
+
 void Game:: ini() {
 	g_process = g_running = p_music = true;
 	speed = 100;
@@ -384,7 +385,7 @@ void Game::SaveGame(){
 	
 	map->DRAW();
 
-	del({ 0,0 }, { short(0+ name.length()+15),1});
+	del({ 0,0 }, { short(0+ name.length()+ 15), 1});
 	GotoXY({ 0,0 });
 	
 	fstream fileout;
@@ -449,7 +450,6 @@ void Game::SaveGame(){
 	//Continue
 	fileout.close();
 	PauseGame();
-
 }
 
 void Game::LoadGame() {
@@ -457,26 +457,29 @@ void Game::LoadGame() {
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 
 	string user_load_game;
+	fstream filein;
+
 
 	if (profile_load != "") {
 		user_load_game = profile_load;
-	} else {
+	}
+
+	else if(profile_load == "" || !menu->load_status) {
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WORD(11));
 		GotoXY({ 113, 32 });
 		cout << "> Input name: ";
 		getline(cin, user_load_game);
 	}
 
-	fstream filein;
 	filein.open("save/" + user_load_game + ".txt");
+	profile_load = "";
 
 	if (filein.fail()) {
-
 		filein.close();
 
 		GotoXY({ 113,33 });
 		cout << "Cannot load your save !";
-		
+
 		Sleep(300);
 		map->DRAW();
 		
@@ -484,7 +487,7 @@ void Game::LoadGame() {
 		PauseGame();
 		return;
 	}
-
+exec:
 	Clear_Car();
 	Clear_Truck();
 	Clear_People();
